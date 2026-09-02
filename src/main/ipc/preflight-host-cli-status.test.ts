@@ -15,6 +15,7 @@ const {
   resolveCliCommandsMock,
   isCommandOnLocalPathMock,
   listLocalCommandPathsMock,
+  resolveCommandOnLocalPathMock,
   mergePersistedWindowsPathAsyncMock,
   mergePersistedWindowsPathMock
 } = vi.hoisted(() => ({
@@ -31,6 +32,7 @@ const {
   resolveCliCommandsMock: vi.fn(),
   isCommandOnLocalPathMock: vi.fn(),
   listLocalCommandPathsMock: vi.fn(),
+  resolveCommandOnLocalPathMock: vi.fn(),
   mergePersistedWindowsPathAsyncMock: vi.fn(),
   mergePersistedWindowsPathMock: vi.fn()
 }))
@@ -69,7 +71,8 @@ vi.mock('../../shared/node-cli-command-resolution', () => ({
 vi.mock('./command-path-resolver', async (importOriginal) => ({
   ...(await importOriginal<typeof LocalCommandResolver>()),
   isCommandOnLocalPath: isCommandOnLocalPathMock,
-  listLocalCommandPaths: listLocalCommandPathsMock
+  listLocalCommandPaths: listLocalCommandPathsMock,
+  resolveCommandOnLocalPath: resolveCommandOnLocalPathMock
 }))
 
 vi.mock('../pty/windows-environment-path', () => ({
@@ -121,6 +124,7 @@ describe('preflight', () => {
         resolveCliCommandsMock,
         isCommandOnLocalPathMock,
         listLocalCommandPathsMock,
+        resolveCommandOnLocalPathMock,
         mergePersistedWindowsPathAsyncMock,
         mergePersistedWindowsPathMock
       },
